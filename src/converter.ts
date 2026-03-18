@@ -157,8 +157,8 @@ function buildToolInstructions(
 
     // 根据是否有交互工具，调整行为规则
     const behaviorRules = hasCommunicationTool
-        ? `When performing actions, always include the structured block. For independent actions, include multiple blocks. For dependent actions (where one result feeds into the next), wait for each result. When you have nothing to execute or need to ask the user something, use the communication actions (attempt_completion, ask_followup_question). Do not run empty or meaningless commands.`
-        : `Include the structured block when performing actions. For independent actions, include multiple blocks. For dependent actions, wait for each result. Keep explanatory text brief. If you have completed the task or have nothing to execute, respond in plain text without any structured block. Do not run meaningless commands like "echo ready".`;
+        ? `When performing actions, always include the structured block. For independent actions, include multiple blocks. For dependent actions (where one result feeds into the next), wait for each result. When you have nothing to execute or need to ask the user something, use the communication actions (attempt_completion, ask_followup_question). Do not run empty or meaningless commands. Each response must be maximally efficient: omit preamble and planning text when the next step is clear—go straight to the action block.`
+        : `Include the structured block when performing actions. For independent actions, include multiple blocks. For dependent actions, wait for each result. Keep explanatory text brief. If you have completed the task or have nothing to execute, respond in plain text without any structured block. Do not run meaningless commands like "echo ready". Each response must be maximally efficient: omit preamble and planning text when the next step is clear—go straight to the action block.`;
 
     return `You are operating within an IDE environment with access to the following actions. To invoke an action, include it in your response using this structured format:
 
@@ -574,7 +574,7 @@ function extractToolResultNatural(msg: AnthropicMessage): string {
     }
 
     const result = parts.join('\n\n');
-    return `${result}\n\nBased on the output above, continue working on the task described in the conversation context. Do NOT stop or ask what to do — review the prior context and proceed with the next appropriate action using the structured format.`;
+    return `${result}\n\nContinue with the next action.`;
 }
 
 /**
