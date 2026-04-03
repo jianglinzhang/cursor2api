@@ -26,7 +26,14 @@ ENV NODE_ENV=production
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 # 安装 wget（用于 entrypoint 健康检查）
-RUN apt-get update && apt-get install -y --no-install-recommends wget && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y --no-install-recommends wget && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+ wget \
+ chromium \
+ fonts-noto \
+ fonts-freefont-ttf \
+ ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
 # 出于安全考虑，避免使用 root 用户运行服务（stealth 模式下使用 --no-sandbox）
 RUN groupadd --system --gid 1001 nodejs && \
