@@ -69,7 +69,7 @@ USER cursor
 
 # 声明对外暴露的端口和持久化卷
 EXPOSE 3010
-VOLUME ["/app/logs"]
+# VOLUME ["/app/logs"]
 
 # 启动服务（通过 start.sh 统一管理 stealth-proxy + cursor2api）
 CMD ["./start.sh"]
